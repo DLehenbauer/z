@@ -13,13 +13,15 @@ export class XorShift32 {
   public next() {
     let y = this.y
 
-    // /* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
+    // Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs"
     y ^= (y << 13)
     y ^= (y >>> 17)
     y ^= (y << 5)
 
+    const r = ~y
+
     this.y = y
     
-    return ((~y) >>> 0) / 0xFFFFFFFF
+    return (r >>> 0) / 0xFFFFFFFF
   }
 }

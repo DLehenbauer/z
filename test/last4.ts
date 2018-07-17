@@ -1,10 +1,10 @@
 export class Last4 {
-  private readonly buffer = new Float64Array(4)
+  private readonly items = [0, 0, 0, 0]
   private head = 0;
   private tail = 0;
   
-  public push(data: number) {
-    this.buffer[this.head] = data;
+  public push(value: number) {
+    this.items[this.head] = value;
     this.head = (++this.head) & 3;
     this.tail = (++this.tail) & 3;
   }
@@ -12,15 +12,9 @@ export class Last4 {
   public areSame(other: ArrayLike<number>) {
     let j = this.tail
     
-    for (let i = 0; i < 4; i++) {
-      const left = other[i]
-      const right = this.buffer[j]
-
-      if (left !== right) {
-        return false
-      }
-      j = (++j) & 3
-    }
-    return true
+    return other[0] === this.items[j++]
+      && other[1] === this.items[(j++) & 3]
+      && other[2] === this.items[(j++) & 3]
+      && other[3] === this.items[j & 3]
   }
 };

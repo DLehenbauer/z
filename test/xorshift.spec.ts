@@ -18,7 +18,7 @@ describe(`xorshift32`, () => {
     do {
       const value = rng.next()
       if (!(0 <= value && value < 1)) {
-          throw new Error(`Produced out of range value: '${value}'`);
+          assert.fail(`Produced out of range value: '${value}'`);
       }
       last4.push(value)
       period++
@@ -29,5 +29,5 @@ describe(`xorshift32`, () => {
     } while (!last4.areSame(initial4))
 
     assert.equal(period, Math.pow(2, 32) - 1)
-  })
+  }).timeout(600000);
 })

@@ -11,6 +11,7 @@ echo.
 echo SEED=%SEED%
 echo.
 
+call :Test Lehmer32 %SEED%
 call :Test GameRand32 %SEED%
 call :Test XorShift32 %SEED%
 call :Test XorShift32Plus %SEED%
