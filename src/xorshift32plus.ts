@@ -19,8 +19,9 @@ export class XorShift32Plus {
 
     // https://en.wikipedia.org/wiki/Xorshift#xorshift+
     const r = ~(y + this.y)
+
     this.y = y
     
-    return (r >>> 0) / 0xFFFFFFFF
+    return (r >>> 0) / 0x100000000
   }
 }
