@@ -2,11 +2,15 @@ const PRNG = require('../dist')
 const lehmer32 = new PRNG.Lehmer32()
 const xorShift32 = new PRNG.XorShift32()
 const xorShift32Plus = new PRNG.XorShift32Plus()
+const xorshift128 = new PRNG.XorShift128()
 const gameRand32 = new PRNG.GameRand32()
 
 const Benchmark = require('benchmark')
 const suite = new Benchmark.Suite
 suite
+  .add('XorShift128', () => {
+    return xorshift128.next()
+  })
   .add('GameRand32', () => {
     return gameRand32.next()
   })
