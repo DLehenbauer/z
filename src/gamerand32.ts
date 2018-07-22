@@ -1,5 +1,5 @@
 // https://stackoverflow.com/a/1205808
-
+// https://github.com/WebKit/webkit/blob/5f86606f7e57d95e730a54b6eb9390c681a58cc9/Source/WTF/wtf/WeakRandom.h
 export class GameRand32 {
   private hi: number;
   private lo: number;
@@ -11,10 +11,16 @@ export class GameRand32 {
   }
 
   public next() {
-    this.hi = ((this.hi >>> 16) + (this.hi << 16)) | 0;
-    this.hi = (this.hi - this.lo) | 0;
-    this.lo = (this.lo - this.hi) | 0;
-        
-    return ((~this.hi) >>> 0) / 0xFFFFFFFF
+    let hi = this.hi
+    let lo = this.lo
+
+    hi = ((hi >>> 16) | (hi << 16));
+    hi = (hi - lo) | 0;
+    lo = (lo - hi) | 0;
+
+    this.hi = hi
+    this.lo = lo
+
+    return hi / 0x100000000
   }
 }

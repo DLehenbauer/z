@@ -32,18 +32,16 @@ export class XSadd128 {
   private z: number
   private w: number
 
-  constructor(seed0: number, seed1 = 362436069, seed2 = 521288629, seed3 = 88675123) {
-    seed0 |= 0
-    seed1 |= 0
-    seed2 |= 0
-    seed3 |= 0
-    
-    this.x = seed0 === 0
-      ? 123456789
-      : seed0
-    this.y = seed1
-    this.z = seed2
-    this.w = seed3
+  constructor(seed0: number, seed1: number, seed2: number, seed3: number) {
+    this.x = (seed0 | 0) || 0x49616E42
+    this.y = (seed1 | 0)
+    this.z = (seed2 | 0)
+    this.w = (seed3 | 0)
+
+    // Discard the first 8 results to ensure inital bits have been sufficient mixed.
+    for (let i = 0; i < 8; i++) {
+      this.advance()
+    }
   }
   
   public advance() {
@@ -63,9 +61,25 @@ export class XSadd128 {
     this.w = t
   }
 
+  public nextInt32() {
+    return (this.w + this.z) | 0
+  }
+
+    /**
+     * Returns a psuedo-random unsigned 32-bit integer 'r' in the range 0 <= r < 2^32
+     * (0 to 4294967295 inclusive).
+     * 
+     * Note that the XSadd algorithm is known to produce weak lower bits.  For better statistical results,
+     * discard lower bits with right shift (>>) or division when less than 32 bits are
+     * needed.
+     */
+  public nextUint32() {
+    return (this.w + this.z) >>> 0
+  }
+
   public next() {
     this.advance()
-    const r = (this.w + this.z) >>> 0
+    const r = this.nextUint32()
     return r / 0x100000000
   }
 }
