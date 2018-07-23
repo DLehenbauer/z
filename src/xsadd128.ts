@@ -32,8 +32,8 @@ export class XSadd128 {
   private z: number
   private w: number
 
-  constructor(seed0: number, seed1: number, seed2: number, seed3: number) {
-    this.x = (seed0 | 0) || 0x49616E42
+  constructor(seed0?: number, seed1 = 0, seed2 = 0, seed3 = 0) {
+    this.x = (seed0 as number | 0) || 0x49616E42
     this.y = (seed1 | 0)
     this.z = (seed2 | 0)
     this.w = (seed3 | 0)

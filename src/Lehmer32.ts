@@ -2,12 +2,8 @@
 export class Lehmer32 {
     private x: number;
     
-    constructor(seed: number) {
-      seed |= 0
-      
-      this.x = seed === 0
-        ? 2463534242
-        : seed
+    constructor(seed?: number) {
+      this.x = (seed as number | 0) || 2463534242
     }
   
     public next() {

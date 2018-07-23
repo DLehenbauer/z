@@ -4,10 +4,9 @@ export class GameRand32 {
   private hi: number;
   private lo: number;
   
-  constructor(seed: number) {
-    seed |= 0
-    this.hi = seed
-    this.lo = seed ^ 0x49616e42
+  constructor(seed = 0) {
+    this.hi = seed | 0
+    this.lo = this.hi ^ 0x49616e42
   }
 
   public next() {

@@ -1,12 +1,8 @@
 export class XorShift32Plus {
   private y: number;
   
-  constructor(seed: number) {
-    seed |= 0
-    
-    this.y = seed === 0
-      ? 2463534242
-      : seed
+  constructor(seed?: number) {
+    this.y = (seed as number | 0) || 2463534242
   }
 
   public next() {

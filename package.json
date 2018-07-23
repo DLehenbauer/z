@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --watch --mode development",
-    "test": "mocha -r ts-node/register --watch-extensions ts test/**/*.spec.ts"
+    "test": "mocha -r ts-node/register --watch-extensions ts test/**/*.spec.ts",
+    "bench": "ts-node test/bench2.ts"
   },
   "keywords": [],
   "repository": {
