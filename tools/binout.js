@@ -2,10 +2,12 @@ const RNG = require('../dist')
 
 function createRng(name, seed) {
   switch (name.toLowerCase()) {
+    case 'xsadd128': return new RNG.XSadd128(seed)
     case 'gamerand32': return new RNG.GameRand32(seed)
     case 'lehmer32': return new RNG.Lehmer32(seed)
     case 'xorshift32': return new RNG.XorShift32(seed)
     case 'xorshift32plus': return new RNG.XorShift32Plus(seed)
+    case 'xorshift128': return new RNG.XorShift128(seed)
     default:
       throw `Invalid argument for -name: '${name}'`
   }

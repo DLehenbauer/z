@@ -11,6 +11,8 @@ echo.
 echo SEED=%SEED%
 echo.
 
+call :Test XSAdd128 %SEED%
+call :Test XorShift128 %SEED%
 call :Test Lehmer32 %SEED%
 call :Test GameRand32 %SEED%
 call :Test XorShift32 %SEED%
@@ -27,6 +29,6 @@ exit /b 0
   echo *** %1:
   echo.
   node binout.js %RNG% %SEED% | RNG_Test.exe stdin -seed %SEEDASHEX% -multithreaded -tlshow 4KB -tlshow 8KB -tlshow 16KB -tlshow 32KB -tlshow 64KB -tlshow 256KB -tlmax 512KB
-  node binout.js %RNG% %SEED% | RNG_Test.exe stdin -seed %SEEDASHEX% -multithreaded
+  node binout.js %RNG% %SEED% | RNG_Test.exe stdin -seed %SEEDASHEX% -multithreaded -tlmin 4MB
   echo.
   goto :EOF

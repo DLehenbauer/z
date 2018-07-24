@@ -62,6 +62,7 @@ export class XSadd128 {
   }
 
   public nextInt32() {
+    this.advance()
     return (this.w + this.z) | 0
   }
 
@@ -74,11 +75,11 @@ export class XSadd128 {
      * needed.
      */
   public nextUint32() {
+    this.advance()
     return (this.w + this.z) >>> 0
   }
 
   public next() {
-    this.advance()
     const r = this.nextUint32()
     return r / 0x100000000
   }
