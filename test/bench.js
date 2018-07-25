@@ -1,6 +1,6 @@
 const PRNG = require('../dist')
 const lehmer32 = new PRNG.Lehmer32()
-const xsadd128 = new PRNG.XSadd128()
+const xsadd128 = new PRNG.XSadd128(0)
 const xorShift32 = new PRNG.XorShift32()
 const xorShift32Plus = new PRNG.XorShift32Plus()
 const xorshift128 = new PRNG.XorShift128()

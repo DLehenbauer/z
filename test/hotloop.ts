@@ -72,14 +72,20 @@ class Test {
 
   public toString() {
     let ops = this.iterationsPerSample * this.samples.length
-    let ms = Array.prototype.reduce.apply(
-      this.samples,
-      [(previous: number, current: number) => {
-        return previous + current
-      }, 0])
+    
+    let lo = +Infinity;
+    let hi = -Infinity;
+    let sum = 0;
 
-    const opsPerSec = (ops / ms) * 1000
+    for (let ms of this.samples) {
+      lo = Math.min(lo, ms)
+      hi = Math.max(lo, ms)
+      sum += ms
+    }
 
-    return `${this.name}: ops: ${ops.toLocaleString()}, ms: ${ms.toLocaleString()}, ops/sec: ${opsPerSec.toLocaleString()}`    
+    const variance = (((hi - lo) / sum) * 100).toLocaleString()
+    const opsPerSec = (ops / sum) * 1000
+
+    return `${this.name} x ${opsPerSec.toLocaleString()} ops/sec ±${variance}% (${sum} runlength)`
   }
 }
