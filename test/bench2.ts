@@ -8,11 +8,14 @@ const xorShift32 = new PRNG.XorShift32()
 //const xorshift128 = new PRNG.XorShift128()
 //const gameRand32 = new PRNG.GameRand32()
 
+let s = 0
+
 const suite = new Suite()
-  .add('xsadd128', () => { return xsadd128.next() })
-  .add('xorshift32', () => { return xorShift32.next() })
+  .add('xsadd128', () => { s += xsadd128.next() })
+  .add('xorshift32', () => { s += xorShift32.next() })
 
 while (true) {
   suite.run()
   console.log(suite.toString())
+  console.log(s)
 }

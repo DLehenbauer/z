@@ -1,3 +1,5 @@
+import U32Generator from './u32generator'
+
 /**
  * Copyright (c) 2014
  * Mutsuo Saito, Makoto Matsumoto, Hiroshima University
@@ -27,13 +29,15 @@
 
 // [1] Vigna, Sebastiano. "Further scramblings of Marsaglia’s xorshift generators." vigna.di.unimi.it. July 24, 2018 <http://vigna.di.unimi.it/ftp/papers/xorshiftplus.pdf>.
 
-export class XSadd128 {
+export class XSadd128 extends U32Generator {
   private x: number
   private y: number
   private z: number
   private w: number
 
   constructor(seed = Math.random() * 0x100000000) {
+    super()
+
     const state = new Uint32Array([seed, 0, 0, 0])
 
     for (let i = 1; i < 8; i++) {
@@ -76,12 +80,8 @@ export class XSadd128 {
     this.w = t
   }
 
-  public nextBits(numBits: number) {
-    return this.nextUint32() >>> (32 - numBits)
-  }
-
   /**
-   * @summary Returns a psuedo-random unsigned 32-bit integer with uniform distribution.
+   * @summary Returns a psuedo-randomly chosen non-negative 32b integer.
    * 
    * @desc 
    * 
@@ -93,45 +93,5 @@ export class XSadd128 {
   public nextUint32() {
     this.advance()
     return (this.w + this.z) >>> 0
-  }
-
-  public nextInt32() {
-    return this.nextUint32() | 0
-  }
-
-  public nextBoolean() {
-    return this.nextInt32() < 0
-  }
-
-  /**
-   * @return An unsigned 53-bit integer 'r' in the range 0 <= r < 2^53
-   * (0 to 9,007,199,254,740,991 inclusive).
-   */
-  public nextUint53() {
-    const hi26 = (this.nextUint32() >>> 6) * 0x08000000
-    const lo27 = (this.nextUint32() >>> 5)
-    return (hi26 + lo27)
-  }
-
-  /**
-   * @return A 32-bit floating point number 'r' in the range 0 <= r < (2^24 - 1) / 2^24
-   * (0 inclusive to ~1 exclusive).
-   */
-  public nextFloat32() {
-    const u24 = (this.nextUint32() >>> 8)
-    return u24 / 0x1000000
-  }
-
-  /**
-   * @return A 32-bit floating point number 'r' in the range 0 <= r < (2^53 - 1) / 2^53
-   * (0 inclusive to ~1 exclusive).
-   */
-  public nextFloat64() {
-    return this.nextUint53() / 0x20000000000000
-  }
-
-  public next() {
-    const u32 = this.nextUint32()
-    return u32 / 0x100000000
   }
 }
